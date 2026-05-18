@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>スター帝国 | STAR EMPIRE</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3212/3212608.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#050816;
+  color:white;
+  font-family:'Noto Sans JP',sans-serif;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,215,0,0.12),transparent 20%),
+    radial-gradient(circle at 80% 40%,rgba(0,170,255,0.12),transparent 25%),
+    radial-gradient(circle at 50% 80%,rgba(255,255,255,0.05),transparent 25%),
+    #050816;
+  z-index:-2;
+}
+
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:0.2;transform:scale(1)}
+  to{opacity:1;transform:scale(1.8)}
+}
+
+header{
+  position:fixed;
+  width:100%;
+  top:0;
+  left:0;
+  backdrop-filter:blur(16px);
+  background:rgba(0,0,0,0.45);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  z-index:999;
+}
+
+nav{
+  max-width:1300px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 25px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;
+  font-size:1.4rem;
+  color:#ffd54f;
+}
+
+.logo img{
+  width:42px;
+  height:42px;
+  filter:drop-shadow(0 0 12px gold);
+}
+
+.nav-links{
+  display:flex;
+  gap:28px;
+}
+
+.nav-links a{
+  color:white;
+  text-decoration:none;
+  position:relative;
+  transition:0.3s;
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0%;
+  height:2px;
+  background:#ffd54f;
+  transition:0.3s;
+}
+
+.nav-links a:hover::after{
+  width:100%;
+}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:120px 20px 40px;
+  position:relative;
+}
+
+.hero-content{
+  max-width:900px;
+}
+
+.hero h1{
+  font-size:clamp(3rem,8vw,7rem);
+  font-family:'Orbitron',sans-serif;
+  color:#ffd54f;
+  text-shadow:0 0 25px rgba(255,215,0,0.5);
+  margin-bottom:20px;
+}
+
+.hero p{
+  font-size:1.2rem;
+  line-height:1.9;
+  color:#d6d6d6;
+}
+
+.hero-buttons{
+  margin-top:40px;
+  display:flex;
+  gap:18px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:15px 30px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+  transition:0.35s;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#ffd54f,#ff9800);
+  color:black;
+  box-shadow:0 0 25px rgba(255,193,7,0.4);
+}
+
+.btn-primary:hover{
+  transform:translateY(-4px) scale(1.03);
+}
+
+.btn-secondary{
+  border:1px solid rgba(255,255,255,0.2);
+  color:white;
+  background:rgba(255,255,255,0.06);
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,0.15);
+}
+
+section{
+  padding:110px 20px;
+}
+
+.section-title{
+  text-align:center;
+  font-size:2.8rem;
+  font-family:'Orbitron',sans-serif;
+  margin-bottom:70px;
+  color:#ffd54f;
+}
+
+.grid{
+  max-width:1250px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:28px;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:32px;
+  transition:0.4s;
+  backdrop-filter:blur(10px);
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  border-color:#ffd54f;
+  box-shadow:0 0 30px rgba(255,215,0,0.18);
+}
+
+.card h3{
+  font-size:1.5rem;
+  margin-bottom:15px;
+  color:#ffd54f;
+}
+
+.card p{
+  color:#d4d4d4;
+  line-height:1.8;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:25px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.stat-box{
+  text-align:center;
+  padding:40px 20px;
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.stat-box h2{
+  font-size:3rem;
+  color:#ffd54f;
+  font-family:'Orbitron',sans-serif;
+}
+
+.stat-box span{
+  display:block;
+  margin-top:10px;
+  color:#cfcfcf;
+}
+
+.timeline{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+}
+
+.timeline-item{
+  border-left:3px solid #ffd54f;
+  padding:10px 0 10px 25px;
+}
+
+.timeline-item h4{
+  color:#ffd54f;
+  margin-bottom:8px;
+}
+
+footer{
+  padding:60px 20px;
+  text-align:center;
+  background:black;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+
+footer h2{
+  color:#ffd54f;
+  font-family:'Orbitron',sans-serif;
+  margin-bottom:15px;
+}
+
+.top-btn{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  border:none;
+  background:#ffd54f;
+  color:black;
+  font-size:1.4rem;
+  cursor:pointer;
+  box-shadow:0 0 25px rgba(255,215,0,0.4);
+  transition:0.3s;
+}
+
+.top-btn:hover{
+  transform:translateY(-4px) scale(1.08);
+}
+
+@media(max-width:700px){
+  .nav-links{
+    display:none;
+  }
+
+  .hero h1{
+    line-height:1.1;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<header>
+  <nav>
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3212/3212608.png">
+      STAR EMPIRE
+    </div>
+
+    <div class="nav-links">
+      <a href="#about">帝国概要</a>
+      <a href="#government">政治</a>
+      <a href="#economy">経済</a>
+      <a href="#space">宇宙開発</a>
+      <a href="#history">歴史</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>STAR EMPIRE</h1>
+    <p>
+      星に秩序を。<br>
+      AI・宇宙・スターコインによって統治される超巨大宇宙帝国。
+      スターコーポレーションを中心に、銀河全域へ未来を拡張する。
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#about" class="btn btn-primary">帝国を知る</a>
+      <a href="#space" class="btn btn-secondary">宇宙開発を見る</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="section-title">帝国概要</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>国家体制</h3>
+      <p>
+        皇帝・AI・巨大企業が融合した企業宇宙帝国。
+        テクノロジーと秩序を最優先とする。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>首都</h3>
+      <p>
+        ネオ・ノンセンスシティ。
+        軌道エレベーターと巨大スタータワーを中心に発展した超未来都市。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>国家AI</h3>
+      <p>
+        ASTRAが交通、経済、防衛、宇宙航路をリアルタイム管理。
+        市民生活を支援する。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="government">
+  <h2 class="section-title">政治システム</h2>
+
+  <div class="stats">
+    <div class="stat-box">
+      <h2>1</h2>
+      <span>皇帝</span>
+    </div>
+
+    <div class="stat-box">
+      <h2>7</h2>
+      <span>中央省庁</span>
+    </div>
+
+    <div class="stat-box">
+      <h2>42</h2>
+      <span>植民惑星</span>
+    </div>
+
+    <div class="stat-box">
+      <h2>∞</h2>
+      <span>宇宙への可能性</span>
+    </div>
+  </div>
+</section>
+
+<section id="economy">
+  <h2 class="section-title">スター経済圏</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>スターコイン</h3>
+      <p>
+        帝国標準通貨。
+        AI制御型ブロックチェーンにより銀河規模で運用される。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>スターコーポレーション</h3>
+      <p>
+        宇宙開発・軍事・AI・金融を統括する帝国最大企業。
+        国家基盤を支える存在。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>宇宙資源</h3>
+      <p>
+        惑星鉱石、恒星エネルギー、ダークマター燃料を採掘し帝国経済を支える。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="space">
+  <h2 class="section-title">宇宙開発計画</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>ST-1 ロケット計画</h4>
+      <p>帝国初の超大型恒星間輸送ロケット。</p>
+    </div>
+
+    <div class="timeline-item">
+      <h4>軌道都市建設</h4>
+      <p>宇宙空間に巨大人工都市を建設中。</p>
+    </div>
+
+    <div class="timeline-item">
+      <h4>火星植民地</h4>
+      <p>スター帝国初の完全自給型植民地計画。</p>
+    </div>
+
+    <div class="timeline-item">
+      <h4>銀河ゲート</h4>
+      <p>超空間航行ネットワークの研究開発。</p>
+    </div>
+  </div>
+</section>
+
+<section id="history">
+  <h2 class="section-title">帝国の歴史</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>帝国歴 元年</h3>
+      <p>
+        スターコーポレーションを中心としてスター帝国成立。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>宇宙進出</h3>
+      <p>
+        月軌道都市建設後、複数惑星へ進出。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>AI統治開始</h3>
+      <p>
+        国家AI ASTRA稼働開始。
+        行政効率が飛躍的に向上。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="sites">
+  <h2 class="section-title">帝国関連サイト</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Star Corperation</h3>
+      <p>
+        スター帝国最大企業。
+        AI・宇宙開発・スターコイン経済・軍事技術を担う帝国中枢企業。
+      </p>
+      <br>
+      <a class="btn btn-primary" href="https://novelstar354.github.io/starcorperation" target="_blank">サイトを見る</a>
+    </div>
+
+    <div class="card">
+      <h3>Star Tools</h3>
+      <p>
+        地味にしか役に立たないサービスを集めた実験的技術サイト。
+        独特なUIとネタ系ツールが特徴。
+      </p>
+      <br>
+      <a class="btn btn-primary" href="https://novelstar354.github.io/startools" target="_blank">サイトを見る</a>
+    </div>
+
+    <div class="card">
+      <h3>スターコインレート</h3>
+      <p>
+        スター帝国公式通貨「スターコイン」の売買やレート確認が可能。
+        SF金融市場を再現した未来的サイト。
+      </p>
+      <br>
+      <a class="btn btn-primary" href="https://novelstar354.github.io/coin" target="_blank">サイトを見る</a>
+    </div>
+
+    <div class="card">
+      <h3>Star Space</h3>
+      <p>
+        StarCorperation傘下の宇宙企業。
+        ST-1ロケットや植民地開発計画などを推進している。
+      </p>
+      <br>
+      <a class="btn btn-primary" href="https://novelstar354.github.io/space" target="_blank">サイトを見る</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h2>STAR EMPIRE</h2>
+  <p>
+    © Star Empire Government / Star Corporation<br>
+    星に秩序を。
+  </p>
+</footer>
+
+<button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const stars = document.getElementById('stars');
+
+for(let i=0;i<180;i++){
+  const star = document.createElement('div');
+  star.classList.add('star');
+
+  star.style.left = Math.random()*100 + '%';
+  star.style.top = Math.random()*100 + '%';
+  star.style.animationDuration = (Math.random()*3+2) + 's';
+  star.style.opacity = Math.random();
+
+  stars.appendChild(star);
+}
+</script>
+
+</body>
+</html>
